@@ -1,0 +1,28 @@
+.dot {
+  position: relative;
+  font-size: 10px;
+  width: 7px;
+  height: 7px;
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+  /* options */
+  /* font-weight: bold; */
+}
+
+.row {
+  line-height: 7px;
+  padding: 0;
+  display: flex;
+}
+
+.main{
+  position: relative;
+} 
+
+body {
+  margin: 0;
+  padding: 0;
+}
