@@ -1,0 +1,16 @@
+{
+  "name": "pixelizer",
+  "version": "1.0.0",
+  "dependencies": {
+    "zurb-twentytwenty": "^0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daiiz/pixelizer.git"
+  },
+  "private": true,
+  "author": "daiiz",
+  "license": "MIT"
+}

@@ -3,6 +3,7 @@
 ## Install
 ```
 $ pip install -r requirements.txt
+$ npm install
 ```
 
 ## Create the image
