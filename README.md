@@ -7,7 +7,7 @@ $ npm install
 ```
 
 ## Create the image
-An SVG image will be generated to `svg/`.
+An SVG image will be generated to `html/`.
 ```
 $ python svg_c.py raw/pancake.jpg
 ```
