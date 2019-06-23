@@ -1,6 +1,6 @@
 raw/*.png
-!raw/pancake.jpg
 raw/*.jpg
+!raw/pancake.jpg
 svg/*.svg
 html/*.html
 html/*.svg
