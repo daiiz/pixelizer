@@ -27,7 +27,7 @@ if __name__ == '__main__':
   file_name = raw_image_path.split('/').pop().split('.')[0]
   mat = to_matrix(raw_image_path, file_name)
   
-  px_str = '@'
+  px_str = '@飯'
   if (len(args) > 2):
     px_str = args[2]
 
