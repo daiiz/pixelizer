@@ -2,9 +2,11 @@ raw/*.png
 raw/*.jpg
 !raw/pancake.jpg
 svg/*.svg
+!svg/pancake.svg
 html/*.html
 !html/view.html
 html/*.svg
+!html/pancake.a.svg
 tmp/*.jpg
 tmp/*.png
 tmp/*.bmp
