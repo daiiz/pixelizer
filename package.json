@@ -2,6 +2,7 @@
   "name": "pixelizer",
   "version": "1.0.0",
   "dependencies": {
+    "puppeteer": "^1.19.0",
     "zurb-twentytwenty": "^0.1.0"
   },
   "devDependencies": {},
@@ -12,5 +13,11 @@
   },
   "private": true,
   "author": "daiiz",
-  "license": "MIT"
+  "license": "MIT",
+  "description": "",
+  "bugs": {
+    "url": "https://github.com/daiiz/pixelizer/issues"
+  },
+  "homepage": "https://github.com/daiiz/pixelizer#readme",
+  "main": "index.js"
 }
