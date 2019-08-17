@@ -9,7 +9,7 @@ const main = async url => {
     waitUntil: 'domcontentloaded'
   })
   await page.waitFor(300)
-  console.log('done!')
+  console.log('render done!')
   const range = await page.evaluate(selector => {
     const svg = document.querySelector(selector)
     const { left: x, top: y, width, height } = svg.getBoundingClientRect()
@@ -30,4 +30,8 @@ const main = async url => {
   await browser.close()
 }
 
-main('http://localhost:8000/html/pancake.a.svg')
+const raw_image_name = process.argv[2]
+if (!raw_image_name || /[/.]/.test(raw_image_name)) {
+  throw new Error('Input image NAME is required.')
+}
+main(`http://localhost:8000/html/${raw_image_name}.a.svg`)

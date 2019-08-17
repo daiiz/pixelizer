@@ -1,7 +1,14 @@
 from PIL import Image
+import sys
 
 if __name__ == '__main__':
-  im = Image.open('./raw/pancake.jpg')
+  args = sys.argv
+  if len(args) <= 1 or len(args[1]) == 0:
+    print('Input image path is required.')
+    exit()
+  raw_image_path = args[1]
+
+  im = Image.open(raw_image_path)
 
   pptrIm = Image.open('./pptr/a.png')
   print(im.width, im.height)
