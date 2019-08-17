@@ -14,5 +14,5 @@ if __name__ == '__main__':
   print(im.width, im.height)
   print(pptrIm.width, pptrIm.height)
 
-  outIm = pptrIm.resize((im.width * 4, im.height * 4), Image.LANCZOS)
+  outIm = pptrIm.resize((im.width * 2, im.height * 2), Image.LANCZOS)
   outIm.save('./pptr/a.2x.png')

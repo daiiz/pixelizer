@@ -19,7 +19,7 @@ const main = async url => {
   await page.setViewport({
     width: range.width,
     height: range.height,
-    deviceScaleFactor: 1
+    deviceScaleFactor: 2
   })
   await page.waitFor(300)
   const filePath = './pptr/a.png'
