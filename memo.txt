@@ -7,3 +7,7 @@
 - python resize.py raw/pancake.jpg
     - -> pptr/a.2x.png
 - open ./pptr/a.2x.png
+
+## v2
+- npm run start
+- open http://localhost:8000/v2/

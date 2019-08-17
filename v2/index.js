@@ -1,17 +1,21 @@
+const u = 15
+const fontSize = 13
+
 const renderChar = char => {
   const canvas = document.querySelector('canvas.input')
   const dpr = window.devicePixelRatio
-  const w = 30 * dpr
-  const h = 30 * dpr
+  const w = u * dpr
+  const h = u * dpr
   canvas.width = w
   canvas.height = h
   const ctx = canvas.getContext('2d')
+  ctx.clearRect()
   ctx.scale(dpr, dpr)
-  canvas.style.width = '30px'
-  canvas.style.height = '30px'
+  canvas.style.width = `${u}px`
+  canvas.style.height = `${u}px`
 
   ctx.fillStyle = 'brown'
-  ctx.font = `bold ${26}px sans-serif`
+  ctx.font = `bold ${fontSize}px sans-serif`
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillText(char, w / (2 * dpr), h / (2 * dpr))
@@ -35,7 +39,7 @@ const readPixelColor = () => {
       }
     }
   }
-  console.log(colors.length)
+  // console.log(colors.length)
   // return renderPixel(colorMap)
 
   // 各行の先頭のピクセルカラー
@@ -66,13 +70,14 @@ const readPixelColor = () => {
 
 const initCanvas = (canvas) => {
   const dpr = window.devicePixelRatio
-  const w = 30 * dpr
-  const h = 30 * dpr
+  const w = u * dpr
+  const h = u * dpr
   canvas.width = w
   canvas.height = h
   const ctx = canvas.getContext('2d')
-  canvas.style.width = '30px'
-  canvas.style.height = '30px'
+  ctx.clearRect()
+  canvas.style.width = `${u}px`
+  canvas.style.height = `${u}px`
   return ctx
 }
 
@@ -90,10 +95,35 @@ const renderPixel = (colorMap) => {
   }
   const dpr = window.devicePixelRatio
   ctx.scale(dpr, dpr)
+
   const dataUrl = canvas.toDataURL('image/png')
-  const img = document.querySelector('img.res')
+  const img = document.createElement('img')
+  img.className = 'res'
   img.src = dataUrl
+  const imgs = document.querySelector('#imgs')
+  imgs.appendChild(img)
 }
 
-renderChar('##')
-readPixelColor()
+window.addEventListener('load', e => {
+  const text = document.querySelector('#char')
+  text.addEventListener('keyup', e => {
+    // const char = e.target.value
+    // Enter以外無視
+    const chars = (e.target.value).split('')
+    if (e.keyCode !== 13 || !char) return
+    // const chars = [char]
+    for (let i = 0; i < 10; i++) chars.push('飯')
+    const imgs = document.querySelector('#imgs')
+
+    for (let i = 0; i < 10; i++) {
+      for (const char of chars) {
+        renderChar(char) // '##'
+        readPixelColor()
+      }
+      const br = document.createElement('br')
+      imgs.appendChild(br)
+      console.log(i)
+    }
+  }, false)
+}, false)
+
