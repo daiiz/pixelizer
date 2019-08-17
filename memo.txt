@@ -1,0 +1,9 @@
+## use-puppeteer
+- npm run start
+  - (Start static server)
+- python svg_c.py raw/pancake.jpg
+- node index.js pancake
+    - -> pptr/a.png
+- python resize.py raw/pancake.jpg
+    - -> pptr/a.2x.png
+- open ./pptr/a.2x.png

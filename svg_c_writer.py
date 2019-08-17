@@ -18,8 +18,9 @@ svg_tail = '</div></html></foreignObject></svg>'
 
 def rect_1x1px(r, g, b, px_str='@'):
   color = 'rgb('+ str(r) +', '+ str(g) +', '+ str(b) +')'
-  colorT = 'rgb('+ str(r) +', '+ str(g) +', '+ str(b) +', .8)' # .5
-  return '<span class="dot" style="color: '+ color +'; text-shadow: 0px 0px 2px '+ colorT +';">'+ px_str +'</span>'
+  colorT = 'rgb(' + str(r) + ', ' + str(g) + ', ' + str(b) + ', .8)'  # .5
+  # text-shadow: 0px 0px 2px '+ colorT +';
+  return '<span class="dot" style="color: ' + color + '; text-shadow: 0px 0px 2px ' + colorT + ';">' + px_str + '</span>'
 
 def svg_c(matrix, px_str):
   body = []

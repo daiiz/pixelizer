@@ -16,3 +16,6 @@ $ python svg_c.py raw/pancake.jpg
 ```
 $ open ./html/view.html
 ```
+
+## Drafts
+- memo.txt
