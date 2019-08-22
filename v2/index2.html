@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>index2</title>
+    <style>
+      canvas {
+        margin: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      拡大倍率
+      <select id='x'>
+        <option value="5" selected>x5</option>
+        <option value="6">x6</option>
+        <option value="8">x8</option>
+        <option value="10">x10</option>
+      </select>
+      <input id='redraw' value="Redraw" type='button'>
+      <input id='btn_export' value="Export as PNG" type='button'>
+      <a id='download' href="" download="image">Download</a>
+    </div>
+    <canvas id='canvas'></canvas>
+    <script src="./index2.js"></script>
+  </body>
+</html>
