@@ -11,3 +11,10 @@
 ## v2
 - npm run start
 - open http://localhost:8000/v2/
+
+## v2-2
+- npm run start
+- python v2/gen_color_map.py v2/pancake.100.jpg
+  - -> tmp/v2-2_pancake.100.txt
+  - -> open http://localhost:8000/tmp/v2-2_pancake.100.txt
+- open http://localhost:8000/v2/index2.html
