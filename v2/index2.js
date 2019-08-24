@@ -9,7 +9,8 @@ let flag_debug = true
 
 let fontSize = 12
 let ctx = null
-const colorMap = [[]]
+let colorType = 'rgb'
+let colorMat = [[]]
 
 const initCanvas = () => {
   const canvas = document.querySelector('#canvas')
@@ -26,8 +27,19 @@ const initCanvas = () => {
   return ctx
 }
 
-const initColorMap = (width, height) => {
-
+const initColorMat = async () => {
+  const rgbMat = await loadRawImage('pancake.100')
+  const yLen = rgbMat.length
+  const xLen = rgbMat[0].length
+  colorType = rgbMat[0][0].length === 4 ? 'rgba' : 'rgb'
+  for (let y = 0; y < yLen; y++) {
+    for (let x = 0; x < xLen; x++) {
+      const [r, g, b] = rgbMat[y][x]
+      rgbMat[y][x] = `${r},${g},${b}`
+    }
+  }
+  colorMat = rgbMat
+  return { widthDots: xLen, heightDots: yLen }
 }
 
 // y行x粒目の中心座標
@@ -65,7 +77,7 @@ const drawChars = (ctx, { color, char, alpha } = {}) => {
   ctx.globalAlpha = alpha || 1
   for (let y = 0; y < h_dots; y++) {
     for (let x = 0; x < w_dots; x++) {
-      if (!color) color = colorMap[y][x]
+      if (!color) color = colorMat[y][x]
       ctx.fillStyle = color
       ctx.font = `bold ${fontSize}px sans-serif`
       ctx.textAlign = 'center'
@@ -76,10 +88,12 @@ const drawChars = (ctx, { color, char, alpha } = {}) => {
   }
 }
 
-window.addEventListener('load', e => {
-  w_dots = 100
-  h_dots = 100
+window.addEventListener('load', async e => {
+  const size = await initColorMat()
+  w_dots = size.widthDots
+  h_dots = size.heightDots
   ctx = initCanvas()
+  console.log("###", size)
   main()
   bindEvents()
 }, false)
