@@ -100,15 +100,19 @@ window.addEventListener('load', async e => {
 }, false)
 
 const main = () => {
+  // 均等透過
+  const drawWithAutoAlpha = chars => {
+    const alpha = 1 / chars.length
+    for (const char of chars) {
+      drawChars(ctx, { char, alpha })
+      if (flag_debug) console.log(char, alpha)
+    }
+  }
   if (!ctx) throw new Error('canvas is not initialized!')
   // drawLattice(ctx)
-  drawChars(ctx, { char: '飯', alpha: .33 })
-  drawChars(ctx, { char: '井', alpha: .33 })
-  drawChars(ctx, { char: '@', alpha: .33 })
-
+  drawWithAutoAlpha(['飯', '井', '@'])
+  updatePreview()
   // drawChars(ctx, { color: 'green', char: '飯', alpha: .5 })
-  // drawChars(ctx, { color: 'yellow', char: '井', alpha: .5 })
-  // drawChars(ctx, { color: 'red', char: '@', alpha: .25 })
 }
 
 const bindEvents = () => {
@@ -121,19 +125,21 @@ const bindEvents = () => {
     main()
   }, false)
   // PNG画像としてダウンロード
-  document.querySelector('#btn_export').addEventListener('click', e => {
-    const canvas = document.querySelector('#canvas')
-    const dataUri = canvas.toDataURL('image/png')
-    const a = document.querySelector('#download')
-    a.href = dataUri
-    // Preview
-    const x = 3
-    const style = `width: ${w_dots * x}px; height: ${h_dots * x}px;`
-    const imgX2 = document.querySelector('#img-x2')
-    imgX2.style = style
-    imgX2.src = dataUri
-    const imgX2Raw = document.querySelector('#img-x2-raw')
-    imgX2Raw.style = style
-    imgX2Raw.src = getRawImageSrcUrl(rawImageName, 'jpg')
-  })
+  document.querySelector('#btn_export').addEventListener('click', updatePreview)
+}
+
+const updatePreview = () => {
+  const canvas = document.querySelector('#canvas')
+  const dataUri = canvas.toDataURL('image/png')
+  const a = document.querySelector('#download')
+  a.href = dataUri
+  // Preview
+  const x = 3
+  const style = `width: ${w_dots * x}px; height: ${h_dots * x}px;`
+  const imgX2 = document.querySelector('#img-x2')
+  imgX2.style = style
+  imgX2.src = dataUri
+  const imgX2Raw = document.querySelector('#img-x2-raw')
+  imgX2Raw.style = style
+  imgX2Raw.src = getRawImageSrcUrl(rawImageName, 'jpg')
 }
