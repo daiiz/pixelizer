@@ -10,6 +10,7 @@ html/*.svg
 tmp/*.jpg
 tmp/*.png
 tmp/*.bmp
+tmp/*.txt
 !tmp/pancake.bmp
 
 pptr/*.png
