@@ -11,6 +11,7 @@ let fontSize = 12
 let ctx = null
 let colorType = 'rgb'
 let colorMat = [[]]
+let rawImageName = 'pancake.100'
 
 const initCanvas = () => {
   const canvas = document.querySelector('#canvas')
@@ -28,7 +29,7 @@ const initCanvas = () => {
 }
 
 const initColorMat = async () => {
-  const rgbMat = await loadRawImage('pancake.100')
+  const rgbMat = await loadRawImage(rawImageName)
   const yLen = rgbMat.length
   const xLen = rgbMat[0].length
   colorType = rgbMat[0][0].length === 4 ? 'rgba' : 'rgb'
@@ -75,11 +76,12 @@ const drawLattice = (ctx, { color } = {}) => {
 const drawChars = (ctx, { color, char, alpha } = {}) => {
   if (!char) char = '@'
   ctx.globalAlpha = alpha || 1
+  let fillColor = color
   for (let y = 0; y < h_dots; y++) {
     for (let x = 0; x < w_dots; x++) {
-      if (!color) color = colorMat[y][x]
-      ctx.fillStyle = color
-      ctx.font = `bold ${fontSize}px sans-serif`
+      if (!color) fillColor = `${colorType}(${colorMat[y][x]})`
+      ctx.fillStyle = fillColor
+      ctx.font = `900 ${fontSize}px sans-serif`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
       const center = getCenter(x, y)
@@ -93,7 +95,6 @@ window.addEventListener('load', async e => {
   w_dots = size.widthDots
   h_dots = size.heightDots
   ctx = initCanvas()
-  console.log("###", size)
   main()
   bindEvents()
 }, false)
@@ -101,7 +102,11 @@ window.addEventListener('load', async e => {
 const main = () => {
   if (!ctx) throw new Error('canvas is not initialized!')
   // drawLattice(ctx)
-  drawChars(ctx, { color: 'green', char: '飯', alpha: .5 })
+  drawChars(ctx, { char: '飯', alpha: .33 })
+  drawChars(ctx, { char: '井', alpha: .33 })
+  drawChars(ctx, { char: '@', alpha: .33 })
+
+  // drawChars(ctx, { color: 'green', char: '飯', alpha: .5 })
   // drawChars(ctx, { color: 'yellow', char: '井', alpha: .5 })
   // drawChars(ctx, { color: 'red', char: '@', alpha: .25 })
 }
@@ -121,5 +126,14 @@ const bindEvents = () => {
     const dataUri = canvas.toDataURL('image/png')
     const a = document.querySelector('#download')
     a.href = dataUri
+    // Preview
+    const x = 3
+    const style = `width: ${w_dots * x}px; height: ${h_dots * x}px;`
+    const imgX2 = document.querySelector('#img-x2')
+    imgX2.style = style
+    imgX2.src = dataUri
+    const imgX2Raw = document.querySelector('#img-x2-raw')
+    imgX2Raw.style = style
+    imgX2Raw.src = getRawImageSrcUrl(rawImageName, 'jpg')
   })
 }

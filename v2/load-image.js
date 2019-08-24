@@ -8,3 +8,7 @@ const loadRawImage = async imageName => {
     throw new Error('Invalid format!')
   }
 }
+
+const getRawImageSrcUrl = (imageName, ext) => {
+  return `/v2/${imageName}.${ext}`
+}
