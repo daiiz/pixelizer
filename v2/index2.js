@@ -11,7 +11,7 @@ let fontSize = 10.5 //12 - 2
 let ctx = null
 let colorType = 'rgb'
 let colorMat = [[]]
-let rawImageName = '🍮.200' //'pancake.100'
+let rawImageName = 'pancake.100'
 let rawImageExt = 'jpg'
 
 const initCanvas = () => {
@@ -74,8 +74,8 @@ const drawLattice = (ctx, { color } = {}) => {
 
 // 文字を描画
 // center
-const drawChars = (ctx, { color, mat, char, alpha } = {}) => {
-  if (!char) char = '@'
+const drawChars = (ctx, { color, mat, char, alpha, blur } = {}) => {
+  // if (!char) char = '@'
   ctx.globalAlpha = alpha || 1
   const fillColorMat = mat || colorMat
   let fillColor = color
@@ -86,10 +86,15 @@ const drawChars = (ctx, { color, mat, char, alpha } = {}) => {
       ctx.font = `900 ${fontSize}px sans-serif`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
-      // ctx.shadowColor = fillColor
-      // ctx.shadowBlur = 1
+      if (blur) {
+        ctx.shadowColor = fillColor
+        ctx.shadowBlur = 1
+      } else {
+        ctx.shadowBlur = 0
+      }
       const center = getCenter(x, y)
       ctx.fillText(char, center.x, center.y)
+      // ctx.fillRect(u_w * x, u_w * y, u_w, u_h)
     }
   }
 }
@@ -117,18 +122,15 @@ const main = () => {
   }
   if (!ctx) throw new Error('canvas is not initialized!')
   // drawLattice(ctx)
-  // drawWithAutoAlpha(['飯', '井', '@'])
   drawWithAutoAlpha([
-    // { char: '■', mat: tile(colorMat, 100, 100) },
-    { char: '■', mat: tile(colorMat, 10, 10) },
-    { char: '■', mat: tile(colorMat, 4, 4) },
-    { char: '■', mat: tile(colorMat, 2, 2) }
+    // { char: '■', mat: tile(colorMat, 10, 10) },
+    // { char: '■', mat: tile(colorMat, 4, 4), alpha: .1 },
+    // { char: '■', mat: tile(colorMat, 2, 2), alpha: .1 }
   ])
   drawWithAutoAlpha([
     { char: '飯' },
     { char: '@' },
     { char: '~' },
-    // { char: '・'}
   ])
   updatePreview()
   // drawChars(ctx, { color: 'green', char: '飯', alpha: .5 })
@@ -161,4 +163,11 @@ const updatePreview = () => {
   const imgX2Raw = document.querySelector('#img-x2-raw')
   imgX2Raw.style = style
   imgX2Raw.src = getRawImageSrcUrl(rawImageName, rawImageExt)
+
+  const container = document.querySelector('#container')
+  container.style = `height: ${h_dots * x}px`
+  $("#container").twentytwenty({
+    no_overlay: true,
+    click_to_move: true
+  })
 }
