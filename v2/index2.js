@@ -124,8 +124,8 @@ const main = () => {
   // drawLattice(ctx)
   drawWithAutoAlpha([
     // { char: '■', mat: tile(colorMat, 10, 10) },
-    // { char: '■', mat: tile(colorMat, 4, 4), alpha: .1 },
-    // { char: '■', mat: tile(colorMat, 2, 2), alpha: .1 }
+    { char: '■', mat: tile(colorMat, 4, 4), alpha: .1 },
+    { char: '■', mat: tile(colorMat, 2, 2), alpha: .1 }
   ])
   drawWithAutoAlpha([
     { char: '飯' },
