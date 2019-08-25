@@ -7,11 +7,12 @@ let h_dots = 1
 // flag for debug
 let flag_debug = true
 
-let fontSize = 12
+let fontSize = 10.5 //12 - 2
 let ctx = null
 let colorType = 'rgb'
 let colorMat = [[]]
-let rawImageName = 'pancake.100'
+let rawImageName = '🍮.200' //'pancake.100'
+let rawImageExt = 'jpg'
 
 const initCanvas = () => {
   const canvas = document.querySelector('#canvas')
@@ -73,17 +74,20 @@ const drawLattice = (ctx, { color } = {}) => {
 
 // 文字を描画
 // center
-const drawChars = (ctx, { color, char, alpha } = {}) => {
+const drawChars = (ctx, { color, mat, char, alpha } = {}) => {
   if (!char) char = '@'
   ctx.globalAlpha = alpha || 1
+  const fillColorMat = mat || colorMat
   let fillColor = color
   for (let y = 0; y < h_dots; y++) {
     for (let x = 0; x < w_dots; x++) {
-      if (!color) fillColor = `${colorType}(${colorMat[y][x]})`
+      if (!color) fillColor = `${colorType}(${fillColorMat[y][x]})`
       ctx.fillStyle = fillColor
       ctx.font = `900 ${fontSize}px sans-serif`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
+      // ctx.shadowColor = fillColor
+      // ctx.shadowBlur = 1
       const center = getCenter(x, y)
       ctx.fillText(char, center.x, center.y)
     }
@@ -101,16 +105,31 @@ window.addEventListener('load', async e => {
 
 const main = () => {
   // 均等透過
-  const drawWithAutoAlpha = chars => {
-    const alpha = 1 / chars.length
-    for (const char of chars) {
-      drawChars(ctx, { char, alpha })
+  const drawWithAutoAlpha = options => {
+    const _alpha = 1 / options.length
+    for (const option of options) {
+      const char = option.char
+      const mat = option.mat
+      const alpha = option.alpha || _alpha
+      drawChars(ctx, { mat, char, alpha })
       if (flag_debug) console.log(char, alpha)
     }
   }
   if (!ctx) throw new Error('canvas is not initialized!')
   // drawLattice(ctx)
-  drawWithAutoAlpha(['飯', '井', '@'])
+  // drawWithAutoAlpha(['飯', '井', '@'])
+  drawWithAutoAlpha([
+    // { char: '■', mat: tile(colorMat, 100, 100) },
+    { char: '■', mat: tile(colorMat, 10, 10) },
+    { char: '■', mat: tile(colorMat, 4, 4) },
+    { char: '■', mat: tile(colorMat, 2, 2) }
+  ])
+  drawWithAutoAlpha([
+    { char: '飯' },
+    { char: '@' },
+    { char: '~' },
+    // { char: '・'}
+  ])
   updatePreview()
   // drawChars(ctx, { color: 'green', char: '飯', alpha: .5 })
 }
@@ -141,5 +160,5 @@ const updatePreview = () => {
   imgX2.src = dataUri
   const imgX2Raw = document.querySelector('#img-x2-raw')
   imgX2Raw.style = style
-  imgX2Raw.src = getRawImageSrcUrl(rawImageName, 'jpg')
+  imgX2Raw.src = getRawImageSrcUrl(rawImageName, rawImageExt)
 }
