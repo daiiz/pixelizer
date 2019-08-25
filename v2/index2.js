@@ -92,11 +92,15 @@ const drawChars = (ctx, { color, mat, char, alpha, blur } = {}) => {
       } else {
         ctx.shadowBlur = 0
       }
-      const center = getCenter(x, y)
-      ctx.fillText(char, center.x, center.y)
-      // ctx.fillRect(u_w * x, u_w * y, u_w, u_h)
+      drawChar(ctx, { char, x, y })
     }
   }
+}
+
+// unitLeftTopPosisitonが与えられる
+const drawChar = (ctx, { char, x, y }) => {
+  const center = getCenter(x, y)
+  ctx.fillText(char, center.x, center.y)
 }
 
 window.addEventListener('load', async e => {

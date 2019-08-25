@@ -6,10 +6,13 @@
     <title>index2</title>
     <style>
       html {
-        background-color: #555;
+        background-color: #222;
       }
       canvas {
         margin: 8px;
+      }
+      h2, span {
+        color: #efefef;
       }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,7 +22,13 @@
   </head>
   <body>
     <div>
-      拡大倍率
+      <!-- <span>画像</span>
+      <select id='iamge-name'>
+        <option value="g.jpg">g.jpg</option>
+        <option value="pancake.100.jpg" selected>pancake.100.jpg</option>
+        <option value="🍮.200.jpg">🍮.200.jpg</option>
+      </select> -->
+      <span>拡大倍率</span>
       <select id='x'>
         <option value="5" selected>x5</option>
         <option value="6">x6</option>
@@ -27,6 +36,8 @@
         <option value="10">x10</option>
       </select>
       <input id='redraw' value="Redraw" type='button'>
+    </div>
+    <div>
       <input id='btn_export' value="Export as PNG" type='button'>
       <a id='download' href="" download="image">Download</a>
     </div>
