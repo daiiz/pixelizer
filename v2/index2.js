@@ -7,11 +7,13 @@ let h_dots = 1
 // flag for debug
 let flag_debug = true
 
-let fontSize = 10.5 //12 - 2
+let fontSize = 10.55 //12 - 2
 let ctx = null
 let colorType = 'rgb'
 let colorMat = [[]]
-let rawImageName = 'pancake.100'
+// let rawImageName = '🍮.200'
+let rawImageName = 'g'
+// let rawImageName = 'pancake.100'
 let rawImageExt = 'jpg'
 
 const initCanvas = () => {
@@ -83,24 +85,75 @@ const drawChars = (ctx, { color, mat, char, alpha, blur } = {}) => {
     for (let x = 0; x < w_dots; x++) {
       if (!color) fillColor = `${colorType}(${fillColorMat[y][x]})`
       ctx.fillStyle = fillColor
-      ctx.font = `900 ${fontSize}px sans-serif`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
       if (blur) {
         ctx.shadowColor = fillColor
-        ctx.shadowBlur = 1
+        ctx.shadowBlur = 10
       } else {
         ctx.shadowBlur = 0
       }
-      drawChar(ctx, { char, x, y })
+      if (!char) {
+        ctx.fillRect(u_w * x, u_w * y, u_w, u_h)
+      } else {
+        // ctx.strokeStyle = fillColor
+        // ctx.strokeRect(u_w * x, u_w * y, u_w, u_h)
+        drawCharInUnit(ctx, { char, x, y, alpha, n: 1 })
+      }
     }
   }
 }
 
 // unitLeftTopPosisitonが与えられる
-const drawChar = (ctx, { char, x, y }) => {
-  const center = getCenter(x, y)
-  ctx.fillText(char, center.x, center.y)
+const drawCharInUnit = (ctx, { char, x, y, alpha, n } = { alpha: 1, n: 1 }) => {
+  const unitCenter = getCenter(x, y)
+  ctx.font = `900 ${fontSize}px sans-serif`
+  const _x = unitCenter.x
+  const _y = unitCenter.y
+  let centers = []
+  const h_u_w = u_w / 2
+  const q_u_w = u_w / 4
+  const q_u_h = u_h / 4
+  switch (n) {
+    case 4:
+      // https://gyazo.com/9b8de692f85caa7b38428fcddc0a8d4f
+      ctx.font = `900 ${fontSize / n}px sans-serif`
+      centers = [
+        { x: _x - q_u_w, y: _y - q_u_h },
+        { x: _x - q_u_w, y: _y + q_u_h },
+        { x: _x + q_u_w, y: _y - q_u_h },
+        { x: _x + q_u_w, y: _y + q_u_h }
+      ]
+      for (const center of centers) {
+        // ctx.fillRect(center.x - 1, center.y - 1, 2, 2)
+        ctx.fillText(char, center.x, center.y)
+      }
+      break
+    case 2:
+      // https://gyazo.com/ed3c3992ec3fe9a585b35b166ef3aa5e
+      centers = [
+        { x: _x - h_u_w, y: _y },
+        { x: _x + h_u_w, y: _y }
+      ]
+      for (const center of centers) {
+        // ctx.fillRect(center.x - 1, center.y - 1, 2, 2)
+        ctx.fillText(char, center.x, center.y)
+      }
+      break
+    case 22:
+      ctx.globalAlpha = alpha / 2
+      // https://gyazo.com/1292c75b81cb99e8bc23f42d03ba5040
+      centers = [
+        { x: _x - q_u_w, y: _y },
+        { x: _x + q_u_w, y: _y }
+      ]
+      for (const center of centers) {
+        ctx.fillText(char, center.x, center.y)
+      }
+      break
+    default:
+      ctx.fillText(char, _x, _y)
+  }
 }
 
 window.addEventListener('load', async e => {
@@ -127,15 +180,25 @@ const main = () => {
   if (!ctx) throw new Error('canvas is not initialized!')
   // drawLattice(ctx)
   drawWithAutoAlpha([
-    // { char: '■', mat: tile(colorMat, 10, 10) },
-    { char: '■', mat: tile(colorMat, 4, 4), alpha: .1 },
-    { char: '■', mat: tile(colorMat, 2, 2), alpha: .1 }
+    // { mat: tile(colorMat, 1, 1), alpha: .2 },
+    { char: '■', mat: tile(colorMat, 4, 4), alpha: .5 },
+    { char: '■', mat: tile(colorMat, 2, 2), alpha: .5},
   ])
   drawWithAutoAlpha([
     { char: '飯' },
     { char: '@' },
-    { char: '~' },
+    { char: 'S' },
   ])
+  // drawWithAutoAlpha([
+  //   { char: 'あ' },
+  //   { char: 'ゑ' },
+  //   { char: '::' },
+  // ])
+  // drawWithAutoAlpha([
+  //   { char: '飯' },
+  //   { char: '@' },
+  //   { char: '#' },
+  // ])
   updatePreview()
   // drawChars(ctx, { color: 'green', char: '飯', alpha: .5 })
 }
@@ -166,6 +229,7 @@ const updatePreview = () => {
   imgX2.src = dataUri
   const imgX2Raw = document.querySelector('#img-x2-raw')
   imgX2Raw.style = style
+  // imgX2Raw.src = '/tmp/x_a.png'
   imgX2Raw.src = getRawImageSrcUrl(rawImageName, rawImageExt)
 
   const container = document.querySelector('#container')
