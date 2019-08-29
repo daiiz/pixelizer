@@ -18,3 +18,5 @@
   - -> tmp/v2-2_pancake.100.txt
   - -> open http://localhost:8000/tmp/v2-2_pancake.100.txt
 - open http://localhost:8000/v2/index2.html
+- python x.py pancake.100
+  -> open ./tmp/x_a.png

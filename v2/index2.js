@@ -1,5 +1,5 @@
 // units
-let u_w = 10 / 2 // 倍率: デモでは5,6,8,10くらいがいいい？
+let u_w = 5 // 倍率: デモでは5,6,8,10くらいがいいい？
 let u_h = u_w
 // width, height dots
 let w_dots = 1
@@ -7,12 +7,12 @@ let h_dots = 1
 // flag for debug
 let flag_debug = true
 
-let fontSize = 10.55 //12 - 2
+let fontSize = (2 * u_w) + 0.55 // 10.55 //12 - 2
 let ctx = null
 let colorType = 'rgb'
 let colorMat = [[]]
-// let rawImageName = '🍮.200'
-let rawImageName = 'g'
+let rawImageName = '🍮.200'
+// let rawImageName = 'g'
 // let rawImageName = 'pancake.100'
 let rawImageExt = 'jpg'
 
